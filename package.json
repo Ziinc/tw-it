@@ -4,10 +4,10 @@
   "description": "TiddlyWiki it!",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && cp -r ./assets/* ./dist",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "prestart": "npm run build",
+    "compile": "tsc --outDir ./_build && cp -r ./assets/* ./_build",
+    "pack": "electron-builder --dir --projectDir ./_build",
+    "dist": "electron-builder --projectDir ./_build",
+    "prestart": "npm run compile",
     "start": "electron dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
