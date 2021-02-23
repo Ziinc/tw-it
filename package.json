@@ -2,14 +2,16 @@
   "name": "tw-it",
   "version": "0.1.0",
   "description": "TiddlyWiki it!",
-  "main": "dist/index.js",
+  "main": "_build/lib/index.js",
   "scripts": {
-    "compile": "tsc --outDir ./_build && cp -r ./assets/* ./_build",
-    "pack": "electron-builder --dir --projectDir ./_build",
-    "dist": "electron-builder --projectDir ./_build",
+    "compile": "rm -rf ./_build/* &&  tsc && mkdir ./_build/assets && cp -r ./assets/* ./_build/assets/",
+    "unpacked": "electron-builder --dir",
+    "prepacked": "npm run compile",
+    "packed": "electron-builder",
     "prestart": "npm run compile",
-    "start": "electron dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron lib",
+    "build": "npm run compile && npm run unpacked ",
+    "test": "npm run build && jest _build/tests"
   },
   "author": "",
   "license": "MIT",
@@ -18,13 +20,22 @@
     "tiddlywiki": "^5.1.23"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.31",
     "electron": "^11.2.3",
     "electron-builder": "^22.9.1",
     "jest": "^26.6.3",
+    "spectron": "^13.0.0",
     "typescript": "^4.1.5"
   },
   "build": {
     "appId": "com.electron.tw-it",
-    "productName": "TW It"
+    "productName": "TW it",
+    "directories": {
+      "output": "_build/dist"
+    },
+    "extraResources": [
+      "assets/**"
+    ]
   }
 }
